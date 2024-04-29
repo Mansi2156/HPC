@@ -6,15 +6,15 @@ using namespace std;
 class node
 {
 	public:
-    		node *left, *right;
-    		int data;
+    	node *left, *right;
+    	int data;
 };    
 
 class Breadthfs
 {
 	public:
- 		node *insert(node *, int);
- 		void bfs(node *);
+ 	node *insert(node *, int);
+ 	void bfs(node *);
  
 };
 
@@ -79,7 +79,7 @@ void bfs(node *head)
    	{
    		qSize = q.size();
    		#pragma omp parallel for
-            	//creates parallel threads
+            		//creates parallel threads
    		for (int i = 0; i < qSize; i++)
    		{
    			node* currNode;
@@ -97,8 +97,10 @@ void bfs(node *head)
    			 	if(currNode->right) // push parent's right node in queue   
    				 	q.push(currNode->right);
    			 }	 
+
    		 }
    	 }
+
 }
 
 int main()
@@ -106,14 +108,26 @@ int main()
 	node *root=NULL;
     	int data;
     	char ans;
+
     	do
     	{
    	 	cout<<"\n enter data=>";
    	 	cin>>data;
+   	 
    	 	root=insert(root,data);
+    
    	 	cout<<"do you want insert one more node?";
    	 	cin>>ans;
+    
     	}while(ans=='y'||ans=='Y');
+	
+	double start,end;
+    	start=omp_get_wtime();    
     	bfs(root);
+	end=omp_get_wtime();
+
+	printf("\n-------------------------\n Time Parallel= %f",(end-start));
+
+    
     	return 0;
 }
