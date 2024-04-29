@@ -18,22 +18,20 @@ void dfs(int node) {
     		s.pop();
 
     		if (!visited[curr_node]) 
-		{
-        		visited[curr_node] = true;
+        			visited[curr_node] = true;
         	
         		if (visited[curr_node]) 
-			{
         			cout << curr_node << " ";
-			}
-
+    	
+		
+		//Parallelizes the exploration of neighbors
         		#pragma omp parallel for
-        		for (int i = 0; i < graph[curr_node].size(); i++) 
-			{
+        		for (int i = 0; i < graph[curr_node].size(); i++) {
             			int adj_node = graph[curr_node][i];
-            			if (!visited[adj_node]) {
-                			s.push(adj_node);
-            			}
-        		}
+            				if (!visited[adj_node]) {
+                					s.push(adj_node);
+            				}
+        			}
     		}
 	}
 }
@@ -45,9 +43,9 @@ int main() {
          	//n: node,m:edges
          
 	cout << "Enter Pair of edges:" ;
-	for (int i = 0; i < m; i++) 
-	{
+	for (int i = 0; i < m; i++) {
     		int u, v;
+    		
     		cin >> u >> v;
 		//u and v: Pair of edges
     		graph[u].push_back(v);
@@ -55,12 +53,17 @@ int main() {
 	}
 
 	#pragma omp parallel for
-	for (int i = 0; i < n; i++) 
-	{
+	for (int i = 0; i < n; i++) {
     		visited[i] = false;
 	}
-
+	
+	double start,end;
+    	start=omp_get_wtime();    
 	dfs(start_node);
+	end=omp_get_wtime();
+
+	printf("\n-------------------------\n Time Parallel= %f",(end-start));
+
 
 	/* for (int i = 0; i < n; i++) {
     		if (visited[i]) {
