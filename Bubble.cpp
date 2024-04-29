@@ -12,8 +12,13 @@ void bubble(int *a, int n)
 	for(  int i = 0;  i < n;  i++ )
      	{  	 
    	 	int first = i % 2; 	 
+//It determines whether the inner loop starts at index 0 or 1, effectively dividing the array into two 
+halves to be sorted concurrently.		
 
    	 	#pragma omp parallel for shared(a,first)
+		//This ensures that each thread has access to the array and the 
+		current value of first.
+
    	 	for(  int j = first;  j < n-1;  j += 2  )
    	   	{  	 
    			if(  a[ j ]  >  a[ j+1 ]  )
@@ -53,7 +58,7 @@ int main()
     
     	for(i=0;i<SIZE;i++)
     	{
-        	a[i]=rand()%SIZE;
+        		a[i]=rand()%SIZE;
     	}
     
     	int n = SIZE;
