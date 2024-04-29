@@ -1,13 +1,14 @@
 #include <iostream>
 //#include <vector>
 #include <omp.h>
-#include <climits>
+#include <climits> //defining integer limits
 using namespace std;
 
 void min_reduction(int arr[], int n) 
 {
 	int min_value = INT_MAX;
   	#pragma omp parallel for reduction(min: min_value)
+	//min=operation,min_value=variable that will hold the result of the reduction operation
   	for (int i = 0; i < n; i++) 
 	{
 		if (arr[i] < min_value) {
@@ -52,6 +53,8 @@ void average_reduction(int arr[], int n) {
 
 int main() 
 {
+	omp_set_num_threads(4);
+	
 	int arr[] = {73, 85, 66, 40, 80, 81, 99, 97, 12, 85, 191, 47, 20, 100, 325, 184, 412, 7, 22, 89
 	,78, 221, 2, 67, 50, 90, 101, 441, 133, 216, 141, 16, 127, 53, 4, 65, 235, 71, 35, 73, 6, 10, 44, 98
 	, 108, 22, 38, 7, 51, 79, 100, 81, 25, 48, 9, 86, 18, 432, 5, 14, 36, 344, 333, 159, 84, 175, 193,
