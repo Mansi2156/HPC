@@ -30,6 +30,7 @@ void mergesort(int a[],int i,int j)
         			}
     		}
 
+		//// Merging the sorted halves
     		merge(a,i,mid,mid+1,j);    
 	}
 
